@@ -1,24 +1,26 @@
 Counter = new Meteor.Collection('counter');
 
 if (Meteor.isClient) {
-  // counter starts at 0
+
   Template.hello.helpers({
     counter: function () {
-      return Session.get("counter");
+      var myCounter = Counter.findOne({'name': 'myCounter'});
+      return myCounter.count;
     },
     name: "Roel"
   });
 
   Template.hello.events({
     'click button': function () {
-      // increment the counter when button is clicked
-      Session.set("counter", Session.get("counter") + 1);
+      var myCounter = Counter.findOne({'name': 'myCounter'});
+      Counter.update({_id: myCounter._id}, {$inc: {count: 1}});
     }
   });
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
+    Counter.remove({});
     Counter.insert({'name': 'myCounter', 'count': 0});
   });
 }
