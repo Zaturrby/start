@@ -8,4 +8,7 @@ autopublish
 insecure
 accounts-github
 accounts-ui
+meteorhacks:npm
 
+
+npm-container

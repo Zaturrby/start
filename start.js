@@ -1,6 +1,10 @@
 Counter = new Meteor.Collection('counter');
 
 if (Meteor.isClient) {
+  
+  Meteor.call('getGists', function(error, result){
+    Session.set('gists', result);
+  });
 
   Template.hello.helpers({
     counter: function () {
@@ -19,7 +23,7 @@ if (Meteor.isClient) {
       return Meteor.user().services.github.username;
     },
     gists: function(){
-      ["one", "two", "three"]  
+      return Session.get('gists'); 
     }
   });
 
@@ -33,6 +37,22 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  Meteor.methods({
+    getGists: function(){
+      var GithubApi = Meteor.npmRequire('github');
+      var github = new GithubApi({
+        version: "3.0.0"
+      });
+
+      var gists = Async.runSync(function(done){
+        github.gists.getFromUser({user: 'yeehaa123'}, function(err, data){
+          done(null, data);
+        });
+      });
+
+      return gists.result;
+    }
+  });
   Meteor.startup(function () {
   });
 }
