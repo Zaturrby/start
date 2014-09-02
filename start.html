@@ -1,11 +1,14 @@
 <head> <title>start</title> </head> 
 <body>
   <h1>Welcome to Meteor!</h1>
+  {{> loginButtons}}
+
+  {{ currentUser.services.github.username }}
 
   {{> hello}}
 </body>
 
 <template name="hello">
 <button>Click {{ name }}</button>
-  <p>You've pressed the button {{ counter }} times.</p>
+  <p>You've pressed the button {{ counter.count }} times.</p>
 </template>

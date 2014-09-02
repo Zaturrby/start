@@ -4,8 +4,13 @@ if (Meteor.isClient) {
 
   Template.hello.helpers({
     counter: function () {
+      var user ;
+      if(Meteor.user()){
+        user = Meteor.user().services.github.username;
+        console.log(user);
+      }
       var myCounter = Counter.findOne({'name': 'myCounter'});
-      return myCounter.count;
+      return myCounter;
     },
     name: "Roel"
   });
