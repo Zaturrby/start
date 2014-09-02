@@ -4,20 +4,29 @@ if (Meteor.isClient) {
 
   Template.hello.helpers({
     counter: function () {
-      var user ;
       if(Meteor.user()){
-        user = Meteor.user().services.github.username;
-        console.log(user);
+        var user = Meteor.user().services.github.username;
+        var myCounter = Counter.findOne({'name': user});
+        if(!myCounter){
+          myCounter = Counter.insert({'name': user, 'count': 0});
+        }
+        return "You have clicked " + myCounter.count + " times";
+      } else {
+        return "not available";
       }
-      var myCounter = Counter.findOne({'name': 'myCounter'});
-      return myCounter;
     },
-    name: "Roel"
+    name: function(){
+      return Meteor.user().services.github.username;
+    },
+    gists: function(){
+      ["one", "two", "three"]  
+    }
   });
 
   Template.hello.events({
     'click button': function () {
-      var myCounter = Counter.findOne({'name': 'myCounter'});
+      var user = Meteor.user().services.github.username;
+      var myCounter = Counter.findOne({'name': user});
       Counter.update({_id: myCounter._id}, {$inc: {count: 1}});
     }
   });
@@ -25,7 +34,5 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    Counter.remove({});
-    Counter.insert({'name': 'myCounter', 'count': 0});
   });
 }

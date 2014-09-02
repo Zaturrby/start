@@ -9,6 +9,14 @@
 </body>
 
 <template name="hello">
-<button>Click {{ name }}</button>
-  <p>You've pressed the button {{ counter.count }} times.</p>
+  {{#if currentUser }}
+  <button>Click {{ name }}</button>
+  {{/if}}
+  <p>{{ counter }}</p>
+  <hr/>
+  <ul>
+    {{#each gists}}
+      <li>{{this}}</li>
+    {{/each}}
+  </ul>
 </template>
