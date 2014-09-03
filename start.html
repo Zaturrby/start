@@ -3,17 +3,23 @@
   <h1>Welcome to Meteor!</h1>
   {{> loginButtons}}
 
-  {{ currentUser.services.github.username }}
+<!--   {{ currentUser.services.github.username }} -->
 
   {{> hello}}
 </body>
 
 <template name="hello">
-  {{#if currentUser }}
-  <button>Click {{ name }}</button>
-  {{/if}}
-  <p>{{ counter }}</p>
+<!--   {{#if currentUser }}
+
+  {{/if}} -->
+  <h1>Usernames</h1>
+  <ul>
+    {{#each names}}
+      <li><a href="#{{this}}">{{this}}</a></li>
+    {{/each}}
+  </ul>
   <hr/>
+  <h1>Gists</h1>
   <ul>
     {{#each gists}}
       <li>{{url}}</li>
