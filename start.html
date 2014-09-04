@@ -1,21 +1,15 @@
 <head> <title>start</title> </head> 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <h1>The Amazing Gistlister</h1>
   {{> loginButtons}}
-
-<!--   {{ currentUser.services.github.username }} -->
-
   {{> hello}}
 </body>
 
 <template name="hello">
-<!--   {{#if currentUser }}
-
-  {{/if}} -->
   <h1>Usernames</h1>
   <ul>
     {{#each names}}
-      <li><a href="#{{this}}">{{this}}</a></li>
+      <li><a href="#">{{this}}</a></li>
     {{/each}}
   </ul>
   <hr/>
