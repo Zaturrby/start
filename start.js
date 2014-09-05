@@ -5,7 +5,7 @@ if (Meteor.isClient) {
   Template.hello.helpers({
     names: function(){
       var namesList = ["Loading usernames"];
-      
+
       if (Meteor.user()){
         var user = Meteor.user().services.github.username;
 
@@ -25,6 +25,10 @@ if (Meteor.isClient) {
     },
     gists: function () {
       if(Session.get('nameSelected')){
+
+        if (window.doIt) {
+          Meteor.call('removeNames');
+        }
 
         Meteor.call('getGists', Session.get('nameSelected'), function(error, result){
          Session.set('gists', result);
@@ -55,6 +59,11 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.methods({
+    removeNames: function() {
+      Names.remove({}, function(){
+        console.log("removed all names");
+      });
+    },
     getGists: function(user){
       var GithubApi = Meteor.npmRequire('github');
       var github = new GithubApi({
